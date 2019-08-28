@@ -73,3 +73,7 @@ note_payload.json
 generated-key.pgp
 generated_payload.json
 generated_signature.pgp
+
+*.DS_Store
+holistic-demo/istio/istio-*
+*terraform.tfstate*
