@@ -94,6 +94,40 @@ spec:
         }
     }
 
+    stage('SubJobs') {
+      parallel Rbac: {
+          container(containerName) {
+            try {
+              sh "cd holistic-demo/rbac/"
+              sh "make create"
+              sh "make validate"
+            } catch (err){
+              currentBuild.result = 'FAILURE'
+              echo "FAILURE caught echo ${err}"
+              throw err
+            }
+            finally {
+              sh "make teardown"
+            }
+          }
+      }, LoggingSinks: {
+          container(containerName) {
+            try {
+              sh "cd holistic-demo/logging-sinks"
+              sh "make create"
+              sh "make validate"
+            } catch (err){
+              currentBuild.result = 'FAILURE'
+              echo "FAILURE caught echo ${err}"
+              throw err
+            }
+            finally {
+              sh "make teardown"
+            }
+          }
+      }
+    }
+
   }
    catch (err) {
       // if any exception occurs, mark the build as failed
