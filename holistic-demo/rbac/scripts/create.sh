@@ -33,5 +33,5 @@ source "$ROOT/scripts/generate-tfvars.sh"
 
 # Initialize and run Terraform
 (cd "$ROOT/terraform"; terraform init -input=false)
-check_ssh_tunnel
+# check_ssh_tunnel --> Not Needed for Holistic demo. Creating earlier by base directory
 (cd "$ROOT/terraform"; terraform apply -input=false -auto-approve)
