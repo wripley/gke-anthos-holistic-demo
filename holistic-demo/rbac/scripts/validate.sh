@@ -26,7 +26,8 @@ PODLABELER="pod-labeler-"
 
 source "$ROOT/scripts/common.sh"
 
-source "$ROOT/scripts/setup_manifests.sh"
+# source "$ROOT/scripts/setup_manifests.sh"
+
 
 # OWNER Tests
 echo "--- Owner Tests ---"
@@ -54,5 +55,6 @@ echo "Step 8 of the validation passed."
 # ADMIN Tests
 echo "--- Admin Tests ---"
 admin "kubectl get pods -l app=pod-labeler"
+owner "kubectl get clusterrolebinding gke-tutorial-admin-binding"
 admin "kubectl get pods -l app=pod-labeler" | grep "$PODLABELER" &> /dev/null || exit 1
 echo "Step 9 of the validation passed."
