@@ -14,16 +14,19 @@
 # limitations under the License.
 
 # bash "strict-mode", fail immediately if there is a problem
+set -o errexit
 set -o nounset
 set -o pipefail
+
+ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
 
 SUCCESS="hello-server-"
 FAILURE="Error from server (Forbidden)"
 PODLABELER="pod-labeler-"
 
-source "./scripts/common.sh"
+source "$ROOT/scripts/common.sh"
 
-source "./scripts/setup_manifests.sh"
+source "$ROOT/scripts/setup_manifests.sh"
 
 # OWNER Tests
 echo "--- Owner Tests ---"
