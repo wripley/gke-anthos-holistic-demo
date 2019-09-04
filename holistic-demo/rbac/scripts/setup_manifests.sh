@@ -27,4 +27,4 @@ owner "kubectl apply -n test -f ./manifests/hello-server.yaml"
 admin "kubectl apply -n default -f ./manifests/pod-labeler.yaml"
 admin "kubectl apply -n default -f ./manifests/pod-labeler-fix-2.yaml"
 
-sleep 15
+sleep 30
