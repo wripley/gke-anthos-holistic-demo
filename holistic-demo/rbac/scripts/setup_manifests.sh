@@ -18,8 +18,6 @@ set -euo pipefail
 
 admin "kubectl apply -f ./manifests/rbac.yaml"
 
-sleep 15
-
 owner "kubectl apply -n dev -f ./manifests/hello-server.yaml"
 owner "kubectl apply -n prod -f ./manifests/hello-server.yaml"
 owner "kubectl apply -n test -f ./manifests/hello-server.yaml"
@@ -27,4 +25,4 @@ owner "kubectl apply -n test -f ./manifests/hello-server.yaml"
 admin "kubectl apply -n default -f ./manifests/pod-labeler.yaml"
 admin "kubectl apply -n default -f ./manifests/pod-labeler-fix-2.yaml"
 
-sleep 30
+sleep 15

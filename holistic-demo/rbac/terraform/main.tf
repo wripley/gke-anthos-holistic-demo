@@ -111,7 +111,7 @@ data "google_container_cluster" "base_cluster" {
 resource "null_resource" "cluster_admin_binding" {
   provisioner "local-exec" {
     on_failure = "continue"
-    command = "kubectl create clusterrolebinding gke-tutorial-admin-binding --clusterrole cluster-admin --user ${google_service_account.admin.email}"
+    command = "kubectl get clusterrolebinding gke-tutorial-admin-binding &> /dev/null || kubectl create clusterrolebinding gke-tutorial-admin-binding --clusterrole cluster-admin --user ${google_service_account.admin.email}"
     environment = {
       HTTPS_PROXY = "localhost:8888"
     }
