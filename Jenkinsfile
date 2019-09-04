@@ -95,6 +95,22 @@ spec:
     }
 
     stage('SubJobs') {
+      container(containerName) {
+          dir('holistic-demo/rbac/'){
+            try {
+              sh "make create"
+              sh "make validate"
+            } catch (err){
+              currentBuild.result = 'FAILURE'
+              echo "FAILURE caught echo ${err}"
+              throw err
+            }
+            finally {
+              sh "gcloud auth activate-service-account --key-file=${GOOGLE_APPLICATION_CREDENTIALS}"
+              sh "make teardown"
+            }
+          }
+        }
         container(containerName) {
           dir('holistic-demo/logging-sinks'){
             try {
@@ -107,22 +123,6 @@ spec:
               throw err
             }
             finally {
-              sh "make teardown"
-            }
-          }
-        }
-        container(containerName) {
-          dir('holistic-demo/rbac/'){
-            try {
-              sh "make create"
-              sh "make validate"
-            } catch (err){
-              currentBuild.result = 'FAILURE'
-              echo "FAILURE caught echo ${err}"
-              throw err
-            }
-            finally {
-              sh "gcloud auth activate-service-account --key-file=${GOOGLE_APPLICATION_CREDENTIALS}"
               sh "make teardown"
             }
           }
