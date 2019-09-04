@@ -78,6 +78,9 @@ resource "google_project_iam_binding" "kube-api-ro" {
     format("serviceAccount:%s", google_service_account.owner.email),
     format("serviceAccount:%s", google_service_account.auditor.email),
   ]
+  depends_on = [google_service_account.owner,
+                google_service_account.auditor]
+
 }
 
 resource "google_project_iam_member" "kube-api-admin" {
