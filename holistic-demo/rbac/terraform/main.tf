@@ -92,7 +92,6 @@ data "template_file" "rbac_yaml" {
   template = "${file("${path.module}/templates/rbac.yaml")}"
 
   vars = {
-    admin_email = google_service_account.admin.email
     auditor_email = google_service_account.auditor.email
     owner_email   = google_service_account.owner.email
   }
@@ -109,13 +108,13 @@ data "google_container_cluster" "base_cluster" {
   location   = var.region
 }
 
-# resource "null_resource" "cluster_admin_binding" {
-#   provisioner "local-exec" {
-#     on_failure = "continue"
-#     command = "kubectl get clusterrolebinding gke-tutorial-admin-binding &> /dev/null || kubectl create clusterrolebinding gke-tutorial-admin-binding --clusterrole cluster-admin --user ${google_service_account.admin.email}"
-#     environment = {
-#       HTTPS_PROXY = "localhost:8888"
-#     }
-#   }
-#   depends_on = [google_service_account.admin]
-# }
+resource "null_resource" "cluster_admin_binding" {
+  provisioner "local-exec" {
+    on_failure = "continue"
+    command = "kubectl create clusterrolebinding gke-tutorial-admin-binding --clusterrole cluster-admin --user ${google_service_account.admin.email}"
+    environment = {
+      HTTPS_PROXY = "localhost:8888"
+    }
+  }
+  depends_on = [google_service_account.admin]
+}
