@@ -18,6 +18,8 @@ set -euo pipefail
 
 admin "kubectl apply -f ./manifests/rbac.yaml"
 
+sleep 15
+
 owner "kubectl apply -n dev -f ./manifests/hello-server.yaml"
 owner "kubectl apply -n prod -f ./manifests/hello-server.yaml"
 owner "kubectl apply -n test -f ./manifests/hello-server.yaml"
