@@ -54,13 +54,5 @@ echo "Step 8 of the validation passed."
 
 # ADMIN Tests
 echo "--- Admin Tests ---"
-echo "kubectl get pods"
-admin "kubectl get pods"
-echo "kubectl get pods -l app=pod-labeler"
-admin "kubectl get pods -l app=pod-labeler"
-echo "kubectl describe pods pods-labeler"
-admin "kubectl describe pods pods-labeler"
-echo "kubectl get pods -l app=pod-labeler & grep $PODLABELER"
-admin "kubectl get pods -l app=pod-labeler" | grep "$PODLABELER"
-admin "kubectl get pods -l app=pod-labeler" | grep "$PODLABELER" &> /dev/null || exit 1
+admin "kubectl get pods -l app=pod-labeler -n default"  | grep "$PODLABELER" &> /dev/null || exit 1
 echo "Step 9 of the validation passed."
