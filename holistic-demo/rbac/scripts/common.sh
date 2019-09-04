@@ -37,7 +37,7 @@ admin() {
   # Switch kubectl auth to Admin
   auth_sa "admin"
   # shellcheck disable=SC2005
-  echo "$(HTTPS_PROXY=localhost:8888 ${command} 2>&1)"
+  echo "$(HTTPS_PROXY=localhost:8888 ${command})"
 }
 
 auditor() {
