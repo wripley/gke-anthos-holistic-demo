@@ -96,8 +96,9 @@ spec:
 
     stage('SubJobs') {
         container(containerName) {
-          dir('holistic-demo/rbac/'){
+          dir('holistic-demo/logging-sinks'){
             try {
+              sh "gcloud auth activate-service-account --key-file=${GOOGLE_APPLICATION_CREDENTIALS}"
               sh "make create"
               sh "make validate"
             } catch (err){
@@ -111,9 +112,8 @@ spec:
           }
         }
         container(containerName) {
-          dir('holistic-demo/logging-sinks'){
+          dir('holistic-demo/rbac/'){
             try {
-              sh "gcloud auth activate-service-account --key-file=${GOOGLE_APPLICATION_CREDENTIALS}"
               sh "make create"
               sh "make validate"
             } catch (err){
@@ -122,6 +122,7 @@ spec:
               throw err
             }
             finally {
+              sh "gcloud auth activate-service-account --key-file=${GOOGLE_APPLICATION_CREDENTIALS}"
               sh "make teardown"
             }
           }
